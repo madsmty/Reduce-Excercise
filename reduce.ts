@@ -57,11 +57,42 @@ const chatLogs = [
   }
 ];
 
-const finalResult = chatLogs.reduce((accumulator:logObject,currentvalue:logObject) => {
-      return { ...accumulator,
-            [`channelId${currentvalue.channelId}`]: currentvalue
+
+let result:resultObject={
+      channelId:[{
+            userId:"",
+            message:""}
+      ]
+}
+
+let cleanChatLogs = chatLogs.filter(item => item)
+
+const finalResult = cleanChatLogs.reduce((accumulator,currentvalue) => {
+      
+      if (currentvalue) 
+      {
+            const internalArray = cleanChatLogs
+            .filter(element => {
+                  if (element)
+                  return element.channelId = currentvalue.channelId}
+                  )
+            .map((element) => {
+                  if (element)
+                  {
+                        let internalObject:resultLog =
+                        {userId:element.userId, message:element.message}
+                        return internalObject
+                  }})
+
+                 return { ...accumulator,
+                       [`channelId${currentvalue.channelId}`]: internalArray
+                 }}
+                  })
+      } else 
+      {
+            return accumulator;
       }
-})
+
 
 console.log(finalResult)
 
