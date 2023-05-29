@@ -92,8 +92,7 @@ if (!isNotUndefinedArray(cleanChatLogs)) {
         var respuesta: resultObject = accumulator;
         const llave: string = `channel${currentValue.channelId}`;
         if (isKeyOfObject(`channel${currentValue.channelId}`, accumulator)) {
-          console.log("ya existe");
-          //ya existe, dale push al arreglo correspondiente
+         //ya existe, dale push al arreglo correspondiente
           respuesta[llave].push({
             userId: currentValue.userId,
             message: currentValue.message,
@@ -101,7 +100,6 @@ if (!isNotUndefinedArray(cleanChatLogs)) {
           return respuesta;
         } else {
           //no existe, agrega la key al objeto
-          
           respuesta[llave] = [
             { userId: currentValue.userId, message: currentValue.message },
           ];
