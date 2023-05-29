@@ -57,7 +57,6 @@ const chatLogs = [
   }
 ];
 
-
 let result:resultObject={
       channelId:[{
             userId:"",
@@ -65,36 +64,58 @@ let result:resultObject={
       ]
 }
 
-let cleanChatLogs = chatLogs.filter(item => item)
+let cleanChatLogs = chatLogs.filter(item => item) 
 
-const finalResult = cleanChatLogs.reduce((accumulator,currentvalue) => {
-      
-      if (currentvalue) 
-      {
-            const internalArray = cleanChatLogs
-            .filter(element => {
-                  if (element)
-                  return element.channelId = currentvalue.channelId}
-                  )
-            .map((element) => {
-                  if (element)
-                  {
-                        let internalObject:resultLog =
-                        {userId:element.userId, message:element.message}
-                        return internalObject
-                  }})
+function isKeyOfObject<T extends Object>(
+      key: string | number | symbol,
+      obj: T,
+    ): key is keyof T {
+      return key in obj;
+    }
 
-                 return { ...accumulator,
-                       [`channelId${currentvalue.channelId}`]: internalArray
-                 }}
-                  })
-      } else 
-      {
-            return accumulator;
+function isNotUndefinedArray<T>(a_arr: Array<T | undefined>): a_arr is Array<T> {
+      return !a_arr.some(a_item => a_item === undefined);
+  }
+
+  var finalResult:resultObject = {}
+
+  if (!isNotUndefinedArray(cleanChatLogs)) {
+      console.log("undefined")
+  }
+  else {
+      finalResult = cleanChatLogs.reduce<resultObject>((accumulator:resultObject,currentValue:logObject) => {
+      if (currentValue !== undefined && accumulator !==undefined ){
+            var respuesta:resultObject = {}
+            const llave:string =`channel${currentValue.channelId}`
+            if (isKeyOfObject(`channel${currentValue.channelId}`, accumulator)) 
+            {
+            //cls
+            console.log("ya existe")
+            respuesta=accumulator
+                  //ya existe, dale push al arreglo correspondiente
+            respuesta[llave].push({userId:currentValue.userId,message:currentValue.message})
+            //console.log(respuesta);
+            return respuesta;
+            }
+      else 
+            {
+                  //console.log("nuevo")
+                  //no existe, agrega la key al objeto
+                  respuesta=accumulator
+                  respuesta[llave]=[{userId:currentValue.userId,message:currentValue.message}]}
+                  //console.log(respuesta);
+                  return respuesta;
+            }
       }
+      ,  {} as resultObject
+      ) 
+      
+  }
+
+  console.log(finalResult)
 
 
-console.log(finalResult)
+
 
 
 
