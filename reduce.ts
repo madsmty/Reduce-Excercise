@@ -57,14 +57,6 @@ const chatLogs = [
   },
 ];
 
-let result: resultObject = {
-  channelId: [
-    {
-      userId: "",
-      message: "",
-    },
-  ],
-};
 
 let cleanChatLogs = chatLogs.filter((item) => item);
 
@@ -97,7 +89,6 @@ if (!isNotUndefinedArray(cleanChatLogs)) {
             userId: currentValue.userId,
             message: currentValue.message,
           });
-          return respuesta;
         } else {
           //no existe, agrega la key al objeto
           respuesta[llave] = [
